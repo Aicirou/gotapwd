@@ -1,3 +1,15 @@
+/**
+ * FILEPATH: /c:/Users/localhost/Desktop/exp/gotapwd/style.css
+ * 
+ * This CSS file contains styles for a password generator web page.
+ * It imports Google Fonts and defines styles for the body, container, title, password, and other elements.
+ * It also includes media queries for adjusting styles on mobile devices.
+ * The styles use colors such as black, green, and gray to create a visually appealing design.
+ * The password element has different styles for uppercase letters, lowercase letters, numbers, and symbols.
+ * The refresh button has hover effects and can be rotated.
+ * The copy message and count types elements have specific styles for their display.
+ * The question mark element has hover effects and a specific color.
+ */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 body {
   font-family: "fira code", sans-serif;
