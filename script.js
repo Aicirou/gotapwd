@@ -90,9 +90,9 @@ function copyToClipboard() {
   document.getElementById("copyMessage").textContent =
     "Password copied to clipboard!";
   setTimeout(() => {
-    document.getElementById("copyMessage").textContent = "";
-    window.getSelection().removeAllRanges(); // Clear previous selections
-  }, 1000);
+    // document.getElementById("copyMessage").textContent = "";
+    // window.getSelection().removeAllRanges(); // Clear previous selections
+  }, 3000);
 }
 
 // Generate password on page load
@@ -101,6 +101,13 @@ generatePassword();
 // Button event listener
 document.getElementById("refreshButton").addEventListener("click", function () {
   generatePassword();
+  window.getSelection().removeAllRanges(); // Clear previous selections
+  document.getElementById("title").innerHTML =
+    "<span class='grey-text'>Got</span> a" +
+    "<span class='title-color'> random pwd </span>" +
+    "<span class='grey-text'> for me</span>" +
+    "<span title='fuk uuu!' id='question-mark'>...?</span>";
+  //rotate refresh button
   document.getElementById("refreshButton").classList.add("rotate");
   //question mark color change to green
   document.getElementById("question-mark").classList.add("question-mark-color");
@@ -129,6 +136,13 @@ document.getElementById("refreshButton").addEventListener("click", function () {
 document.getElementById("password").addEventListener("click", function () {
   copyToClipboard();
   document.getElementById("countTypes").textContent = "";
+
+  //chabge h1 title to "Got a pwd for you!", where God n pwd are in green color and ! is in grey color
+  document.getElementById("title").innerHTML =
+    "<span class='title-color'>Got</span> a" +
+    "<span class='title-color'> pwd </span>" +
+    "<span class='grey-text'> 4u</span>" +
+    "<span title='fuk uuu!' id='question-mark'>!</span>";
 });
 
 //css animation
