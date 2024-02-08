@@ -21,35 +21,41 @@
         padding: 20px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         text-align: center;
-        width: 400px;
+        width: 250px;
+        height: 150px;
+        zoom: 275%;
       }
       h1 {
-        color: #333;
+        color: black;
+        font-family: "Roboto Mono", monospace;
+        font-size: 16px;
+        text-size-adjust: 100%;
       }
       #password {
-        margin: 20px auto;
+        margin: 10px auto;
         padding: 10px;
-        font-size: 24px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 300px;
+        font-size: 14px;
+        border: 1px dotted #ccc;
+        border-radius: 20px;
+        width: 180px;
         text-align: center;
         outline: none;
+        font-weight: 600;
       }
       .uppercase {
-        color: black;
+        color: #11120f;
       }
       .lowercase {
-        color: grey;
+        color: #1cd400;
       }
       .number {
         color: blue;
       }
       .symbol {
-        color: red;
+        color: #e81123;
       }
       #refreshButton {
-        background-color: #4caf50;
+        background-color: black;
         color: white;
         border: none;
         border-radius: 50%;
@@ -57,38 +63,82 @@
         height: 50px;
         font-size: 24px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.3s; /* Added transform transition */
       }
       #refreshButton:hover {
-        background-color: #45a049;
+        background-color: black;
+        border: 5px solid rgb(70, 19, 19);
+      }
+      .rotate {
+        transform: rotate(-180deg); /* Added rotate transform */
       }
       #copyMessage {
-        font-size: 12px;
+        font-size: 10px;
         color: #777;
         margin-top: 5px;
+        display: block;
+      }
+      #countTypes {
+        font-size: 10px;
+        color: #777;
+        margin-top: 5px;
+        display: block;
       }
     </style>
   </head>
   <body>
     <div id="container">
       <h1>Got a pwd for me?</h1>
-      <textarea id="password" rows="1" readonly></textarea>
-      <br />
+      <p id="password" readonly></p>
+      <!-- <br /> -->
       <button id="refreshButton">&#8634;</button>
-      <p id="copyMessage"></p>
+      <small id="countTypes"></small>
+      <small id="copyMessage" hidden></small>
     </div>
 
     <script>
       function generatePassword() {
-        const charset =
-          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
-        const length = 21;
+        const characterSet = {
+          uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+          lowercase: "abcdefghijklmnopqrstuvwxyz",
+          number: "0123456789",
+          symbol: "!@#$%^&*([{_;:,.?/<'>}])",
+        };
+
         let password = "";
-        for (var i = 0; i < length; i++) {
-          var charIndex = Math.floor(Math.random() * charset.length);
-          password += charset.charAt(charIndex);
+        const passwordLength = 21;
+        // Helper function to get a random character from a given character set.
+        function getRandomCharacter(charSet) {
+          return charSet.charAt(Math.floor(Math.random() * charSet.length));
         }
-        document.getElementById("password").value = password;
+        // Ensure at least one character from each category is included, fill the rest with random characters.
+        for (let i = 0; i < passwordLength; i++) {
+          if (i % 4 == 0 && i < passwordLength - 4) {
+            for (const type in characterSet) {
+              password += getRandomCharacter(characterSet[type]);
+            }
+          }
+        }
+        // Fill the rest of the password with random characters.
+        for (let i = password.length; i < passwordLength; i++) {
+          let randomType =
+            Object.keys(characterSet)[
+              Math.floor(Math.random() * Object.keys(characterSet).length)
+            ];
+          password += getRandomCharacter(characterSet[randomType]);
+        }
+
+        // Function to shuffle a string randomly.
+        function shuffleString(string) {
+          return string
+            .split("")
+            .sort(() => Math.random() - 0.5)
+            .join("");
+        }
+        // Shuffle the password to make it more random.
+        password = shuffleString(password);
+
+        document.getElementById("password").textContent = password;
         updatePasswordStyle(password);
         document.getElementById("copyMessage").textContent = "";
       }
@@ -101,6 +151,8 @@
           number: /\d/,
           symbol: /[^A-Za-z0-9]/,
         };
+        let countTypes = {};
+
         // Style the password based on character types
         let styledPassword = "";
         for (const char of password) {
@@ -108,6 +160,7 @@
           for (const type in characterTypes) {
             if (characterTypes[type].test(char)) {
               charClass = type;
+              countTypes[type] = countTypes[type] + 1 || 1;
               break;
             }
           }
@@ -115,15 +168,29 @@
         }
 
         passwordElement.innerHTML = styledPassword;
+        document.getElementById("countTypes").textContent = `Uppercase: ${
+          countTypes.uppercase || 0
+        }, Lowercase: ${countTypes.lowercase || 0}, Number: ${
+          countTypes.number || 0
+        }, Symbol: ${countTypes.symbol || 0}`;
       }
 
       function copyToClipboard() {
-        var copyText = document.getElementById("password");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-        document.execCommand("copy");
+        // var copyText = document.getElementById("password");
+        // copyText.select();
+        // copyText.setSelectionRange(0, 99999);
+        // document.execCommand("copy");
+        var range = document.createRange();
+        range.selectNode(document.getElementById("password"));
+        window.getSelection().removeAllRanges(); // Clear previous selections
+        window.getSelection().addRange(range); // Select the text
+        document.execCommand("copy"); // Copy the selected text
         document.getElementById("copyMessage").textContent =
           "Password copied to clipboard!";
+        setTimeout(() => {
+          document.getElementById("copyMessage").textContent = "";
+          window.getSelection().removeAllRanges(); // Clear previous selections
+        }, 1000);
       }
 
       // Generate password on page load
@@ -134,6 +201,10 @@
         .getElementById("refreshButton")
         .addEventListener("click", function () {
           generatePassword();
+          document.getElementById("refreshButton").classList.add("rotate");
+          setTimeout(() => {
+            document.getElementById("refreshButton").classList.remove("rotate");
+          }, 100);
         });
 
       // Copy password on click
@@ -141,6 +212,7 @@
         .getElementById("password")
         .addEventListener("click", function () {
           copyToClipboard();
+          document.getElementById("countTypes").textContent = "";
         });
     </script>
   </body>
