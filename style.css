@@ -19,7 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(24, 70, 19);
+  background-color: black;
 }
 body {
   overflow: hidden;
@@ -32,7 +32,7 @@ canvas {
 }
 canvas:hover {
   cursor: pointer;
-  background-color: black
+  background-color: rgb(24, 70, 19)
 }
 #container {
   background-color: black;
