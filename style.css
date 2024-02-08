@@ -55,8 +55,8 @@ canvas:hover {
   border-bottom: 5px solid black;
   border-left: 5px solid #1cd400;
   border-right: 5px solid #1cd400;
-  border-left-width: 10px;
-  border-right-width: 10px;
+  border-left-width: 5px;
+  border-right-width: 5px;
 }
 
 /* Adjustments for mobile devices */
@@ -88,7 +88,7 @@ canvas:hover {
   margin: 10px auto;
   background-color: black;
   padding: 20px;
-  border: 3px solid #1cd400;
+  border: 3px dashed rgb(24, 70, 19);
   border-radius: 50px;
   width: 600px;
   text-align: center;
@@ -126,7 +126,7 @@ canvas:hover {
 #refreshButton {
   background-color: black;
   color: #1cd400;
-  border: 3px solid rgb(24, 70, 19);
+  border: 3px dashed rgb(24, 70, 19);
   border-radius: 50%;
   width: 80px;
   height: 80px;
