@@ -20,7 +20,18 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: rgb(24, 70, 19);
+        /* background: rgb(128, 128, 128);
+        background: radial-gradient(
+          circle,
+          rgba(128, 128, 128, 1) 0%,
+          rgba(28, 212, 0, 1) 100%
+        ); */
+        background: rgb(128, 128, 128);
+        background: linear-gradient(
+          180deg,
+          rgba(128, 128, 128, 1) 0%,
+          rgba(28, 212, 0, 1) 100%
+        );
       }
       #container {
         background-color: black;
@@ -31,6 +42,8 @@
         width: 250px;
         height: 150px;
         zoom: 300%;
+        border-top: 1px solid #1cd400;
+        border-bottom: 1px solid #1cd400;
       }
       #title {
         color: rgb(24, 70, 19);
@@ -70,7 +83,7 @@
         color: rgb(24, 70, 19);
       }
       .number {
-        color: grey;
+        color: #808080;
       }
       .symbol {
         color: #1cd400;
@@ -277,6 +290,7 @@
           setTimeout(() => {
             document.getElementById("refreshButton").classList.remove("rotate");
             document.getElementById("question-mark").style.color = "grey";
+
             Array.from(document.getElementsByClassName("title-color")).forEach(
               (element) => {
                 element.classList.remove("grey-color");
