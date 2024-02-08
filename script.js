@@ -1,3 +1,6 @@
+/**
+ * Generates a random password with a specified length and character set.
+ */
 function generatePassword() {
   const characterSet = {
     uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
