@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+body {
+  font-family: "fira code", sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+body {
+  overflow: hidden;
+}
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+#container {
+  background-color: black;
+  border-radius: 50px;
+  padding: 30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 890px;
+  height: 345px;
+  border-top: 5px solid #1cd400;
+  border-bottom: 5px solid #1cd400;
+  position: relative;
+  z-index: 1;
+  font-size: xx-large;
+}
+
+/* Adjustments for mobile devices */
+/* @media (max-width: 1000px) {
+  #container {
+    width: 90%; /* Reduce width for smaller screens */
+/* font-size: x-large; */
+/* } */
+/* } */
+
+#title {
+  color: rgb(24, 70, 19);
+  background-color: black;
+  font-family: fira code;
+  font-size: 40px;
+}
+#title .title-color {
+  color: #1cd400;
+}
+
+#title .title-color:hover {
+  color: rgb(24, 70, 19);
+}
+#title .title-color.grey-color {
+  color: rgb(24, 70, 19);
+}
+
+#password {
+  margin: 10px auto;
+  background-color: black;
+  padding: 20px;
+  border: 3px solid #1cd400;
+  border-radius: 50px;
+  width: 600px;
+  text-align: center;
+  font-weight: 500;
+  font-family: fira code;
+  font-size: 35px;
+}
+.uppercase {
+  color: rgb(24, 70, 19);
+}
+.lowercase {
+  color: rgb(24, 70, 19);
+}
+.number {
+  color: #808080;
+}
+.symbol {
+  color: #1cd400;
+}
+::selection {
+  color: #1cd400;
+  background: rgb(24, 70, 19);
+}
+
+#password:hover {
+  cursor: pointer;
+  border-top: 3px solid rgb(24, 70, 19);
+  border-bottom: 3px solid rgb(24, 70, 19);
+  border-left: 3px solid #1cd400;
+  border-right: 3px solid #1cd400;
+  border-left-width: 5px;
+  border-right-width: 5px;
+}
+
+#refreshButton {
+  background-color: black;
+  color: #1cd400;
+  border: 3px solid rgb(24, 70, 19);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  display: inline-block;
+  font-size: 40px;
+}
+
+#refreshButton.rotate {
+  transform: rotate(-180deg);
+  transition: transform 0.3s ease-in-out;
+}
+
+#refreshButton:hover {
+  border: 5px solid #1cd400;
+  color: grey;
+  font-size: 35px;
+}
+#copyMessage {
+  color: #1cd400;
+  margin-top: 8px;
+  display: block;
+  background-color: black;
+  font-size: x-large;
+}
+#countTypes {
+  color: #1cd400;
+  margin-top: 8px;
+  display: block;
+  background-color: black;
+  font-size: x-large;
+}
+
+#question-mark {
+  background-color: black;
+  color: gray;
+}
+
+#question-mark:hover {
+  color: #1cd400;
+}
+
+#question-mark.question-mark-color {
+  color: #1cd400;
+}
