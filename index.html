@@ -9,7 +9,8 @@
       type="image/png"
       href="https://img.icons8.com/ios/452/password.png"
     />
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
       body {
@@ -35,6 +36,16 @@
           rgba(28, 212, 0, 1) 100%
         ); */
       }
+      body {
+        overflow: hidden;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
       #container {
         background-color: black;
         border-radius: 10px;
@@ -46,13 +57,14 @@
         zoom: 300%;
         border-top: 1px solid #1cd400;
         border-bottom: 1px solid #1cd400;
+        position: relative;
+        z-index: 1;
       }
       #title {
         color: rgb(24, 70, 19);
         background-color: black;
         font-family: fira code;
         font-size: 16px;
-        text-size-adjust: 100%;
       }
       #title .title-color {
         color: #1cd400;
@@ -147,6 +159,10 @@
       }
 
       #question-mark:hover {
+        color: #1cd400;
+      }
+
+      #question-mark.question-mark-color {
         color: #1cd400;
       }
 
@@ -281,7 +297,9 @@
           generatePassword();
           document.getElementById("refreshButton").classList.add("rotate");
           //question mark color change to green
-          document.getElementById("question-mark").style.color = "#1cd400";
+          document
+            .getElementById("question-mark")
+            .classList.add("question-mark-color");
 
           // Add a class to the grey-text span to change the color to grey
           Array.from(document.getElementsByClassName("title-color")).forEach(
@@ -291,7 +309,9 @@
           );
           setTimeout(() => {
             document.getElementById("refreshButton").classList.remove("rotate");
-            document.getElementById("question-mark").style.color = "grey";
+            document
+              .getElementById("question-mark")
+              .classList.remove("question-mark-color");
 
             Array.from(document.getElementsByClassName("title-color")).forEach(
               (element) => {
@@ -308,6 +328,69 @@
           copyToClipboard();
           document.getElementById("countTypes").textContent = "";
         });
+
+      //css animation
+      let img;
+      const mouses = [];
+      let noise;
+      function preload() {
+        img = loadImage(
+          "https://s3-us-west-2.amazonaws.com/s.cdpn.io/127738/mouse.png"
+        );
+      }
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        noise = new SimplexNoise();
+        noStroke();
+        for (let i = 0; i < 500; i++) {
+          mouses.push(new Mouse());
+        }
+      }
+
+      class Mouse {
+        constructor() {
+          this.x = 0;
+          this.y = 0;
+          this.randomX = Math.random() * 300;
+          this.randomY = Math.random() * 300;
+          this.speed = Math.random() * 0.00015 + 0.00001;
+          this.width = Math.random() * 15 + 5;
+          this.height = this.width * (img.height / img.width);
+
+          // Load the pixels of the image and modify them to make the image green
+          img.loadPixels();
+          for (let i = 0; i < img.pixels.length; i += 4) {
+            img.pixels[i + 1] = 255; // set green channel to maximum, making it green
+          }
+          img.updatePixels();
+        }
+
+        update() {
+          this.x =
+            ((noise.noise3D(this.randomX, 0, millis() * this.speed) + 1) / 2) *
+            width;
+          this.y =
+            ((noise.noise3D(this.randomY, 0, millis() * this.speed) + 1) / 2) *
+            height;
+        }
+
+        draw() {
+          image(img, this.x, this.y, this.width, this.height);
+        }
+      }
+
+      function draw() {
+        clear();
+        mouses.forEach((mouse) => {
+          mouse.update();
+          mouse.draw();
+        });
+      }
+
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
     </script>
   </body>
 </html>
