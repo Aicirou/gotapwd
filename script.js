@@ -1,6 +1,7 @@
 /**
  * Generates a random password with a specified length and character set.
  */
+let generatedPassword = "";
 function generatePassword() {
   const characterSet = {
     uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -45,6 +46,7 @@ function generatePassword() {
   document.getElementById("password").textContent = password;
   updatePasswordStyle(password);
   document.getElementById("copyMessage").textContent = "";
+  generatedPassword = password;
 }
 
 function updatePasswordStyle(password) {
@@ -100,7 +102,17 @@ generatePassword();
 
 // Button event listener
 document.getElementById("refreshButton").addEventListener("click", function () {
+  // Generate a new password
   generatePassword();
+  // Clear the canvas and reset mouses array
+  clearCanvas();
+  // Call setup function to regenerate canvas and mouses
+  setup();
+  // Function to clear canvas and reset mouses array
+  function clearCanvas() {
+    clear();
+    mouses = [];
+  }
   window.getSelection().removeAllRanges(); // Clear previous selections
   document.getElementById("title").innerHTML =
     "<span class='grey-text'>Got</span> a" +
@@ -146,19 +158,14 @@ document.getElementById("password").addEventListener("click", function () {
 });
 
 //css animation
-let img;
-const mouses = [];
+let mouses = [];
 let noise;
-function preload() {
-  img = loadImage(
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/127738/mouse.png"
-  );
-}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noise = new SimplexNoise();
   noStroke();
+  mouses = []; // Reset mouses array
   for (let i = 0; i < 500; i++) {
     mouses.push(new Mouse());
   }
@@ -171,15 +178,16 @@ class Mouse {
     this.randomX = Math.random() * 300;
     this.randomY = Math.random() * 300;
     this.speed = Math.random() * 0.00015 + 0.00001;
-    this.width = Math.random() * 15 + 5;
-    this.height = this.width * (img.height / img.width);
+    this.character = generatedPassword.charAt(
+      Math.floor(Math.random() * generatedPassword.length)
+    );
+    this.fontSize = random(12, 25);
 
-    // Load the pixels of the image and modify them to make the image green
-    img.loadPixels();
-    for (let i = 0; i < img.pixels.length; i += 4) {
-      img.pixels[i + 1] = 255; // set green channel to maximum, making it green
-    }
-    img.updatePixels();
+    // Define color constants for retro color combo
+    this.uppercaseColor = color(24, 70, 19); // dark green
+    this.lowercaseColor = color(24, 70, 19); // dark green
+    this.symbolColor = color(28, 212, 0); // Light Green
+    this.numberColor = color(128, 128, 128); // grey
   }
 
   update() {
@@ -191,7 +199,21 @@ class Mouse {
   }
 
   draw() {
-    image(img, this.x, this.y, this.width, this.height);
+    textSize(this.fontSize);
+    // fill(0, 255, 0); // Set fill color to green
+    if (this.character.match(/[A-Z]/)) {
+      fill(this.uppercaseColor);
+    }
+    if (this.character.match(/[0-9]/)) {
+      fill(this.numberColor);
+    }
+    if (this.character.match(/[^A-Za-z0-9]/)) {
+      fill(this.symbolColor);
+    }
+    if (this.character.match(/[a-z]/)) {
+      fill(this.lowercaseColor);
+    }
+    text(this.character, this.x, this.y);
   }
 }
 
@@ -203,6 +225,7 @@ function draw() {
   });
 }
 
+// Resize canvas on window resize
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
