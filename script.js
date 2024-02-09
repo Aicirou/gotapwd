@@ -182,6 +182,7 @@ class Mouse {
       Math.floor(Math.random() * generatedPassword.length)
     );
     this.fontSize = random(12, 25);
+    this.fontWeight = random(100, 900);
 
     // Define color constants for retro color combo
     this.uppercaseColor = color(24, 70, 19); // dark green
@@ -200,6 +201,7 @@ class Mouse {
 
   draw() {
     textSize(this.fontSize);
+    textStyle(this.fontWeight);
     // fill(0, 255, 0); // Set fill color to green
     if (this.character.match(/[A-Z]/)) {
       fill(this.uppercaseColor);
