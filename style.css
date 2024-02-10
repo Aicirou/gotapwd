@@ -29,9 +29,11 @@ canvas {
   top: 0;
   left: 0;
   z-index: 0;
+  cursor: url(
+      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zm0 30c-7.732 0-14-6.268-14-14s6.268-14 14-14 14 6.268 14 14-6.268 14-14 14zm-1-6h2v-2h-2v2zm0-4h2v-10h-2v10z' fill='%231cd400'/></svg>"
+  ), auto;
 }
 canvas:hover {
-  cursor: pointer;
   background-color: rgb(24, 70, 19)
 }
 #container {
@@ -50,13 +52,14 @@ canvas:hover {
 }
 
 #container:hover {
-  cursor: pointer;
+  /* cursor: pointer; */
   border-top: 5px solid black;
   border-bottom: 5px solid black;
   border-left: 5px solid #1cd400;
   border-right: 5px solid #1cd400;
   border-left-width: 5px;
   border-right-width: 5px;
+
 }
 
 /* Adjustments for mobile devices */
@@ -114,7 +117,7 @@ canvas:hover {
 }
 
 #password:hover {
-  cursor: pointer;
+  cursor: grab;
   border-top: 3px solid rgb(24, 70, 19);
   border-bottom: 3px solid rgb(24, 70, 19);
   border-left: 3px solid #1cd400;
